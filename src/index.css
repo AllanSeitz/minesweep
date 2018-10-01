@@ -1,34 +1,33 @@
 body {
   background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQg3EeIfWNSEBWgR_pQSXinhNgaLAxoni9_hqz2bOprFx0S9TuE);
-  background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
   margin: 0;
   padding: 0;
   font-family: sans-serif;
 }
-tr {
-
-  display: flex;
-  flex-wrap: wrap;
-}
-button {
-  width: 35px;
-}
-h1 {
-  text-align: left;
-  font-size: 3rem;
-  color: white;
-}
 table {
+  border-collapse: collapse;
   align-items: center;
   display: flex;
   flex-direction: column;
 }
 td {
   text-align: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  background-color: aqua;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: darkgrey;
   border: solid 1px black;
+  
+}
+p {
+  font-size: 12px;
+}
+th {
+  border: solid 1px black;
+  background-color: darkgrey;
+}
+tbody {
+  margin-top: 1rem;
+  border-radius: 3%;
+  
 }

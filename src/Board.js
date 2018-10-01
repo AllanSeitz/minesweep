@@ -5,38 +5,77 @@ class Board extends Component {
   game_URL = `https://minesweeper-api.herokuapp.com`
   constructor(props) {
     super(props);
-
     this.state = {
-      board: new Array(8).fill(new Array(8).fill(' '))
-
-    };
+      "id": 0,
+      "board": new Array(8).fill(new Array(8).fill(' ')),
+      //use this state to update win lost and playing
+      "state": '',
+      "mines": 10
+    }
   }
-  // let newBoard = board.map(row, row.map(square, ))
-  loadSample = event => {
+  // newGame = event => {
+  //   axios.post(`${this.BASE_URL}/games`, { difficulty: this.state.difficulty }).then(this.updateState)
+  // }
+  setDifficulty = event => this.setState({ difficulty: event.target.value })
+  newGame = event => {
     axios
-      .get("https://minesweeper-api.herokuapp.com/games/3", { difficulty: 3 })
+      .post(`${this.game_URL}/games`,
+        { difficulty: this.state.difficulty }
+      )
       .then(response => {
         this.setState(response.data);
-      });
-  };
+      })
+  }
+  click = (row, column) => {
+    axios
+      .post(`${this.game_URL}/games/${this.state.id}/check`,
+        { row: row, col: column }
+      )
+      .then(response => {
+        this.setState(response.data);
+      })
+  }
+  flag = (row, column) => {
+    axios
+      .post(`${this.game_URL}/games/${this.state.id}/flag`,
+        { row: row, col: column }
+      )
+      .then(response => {
+        this.setState(response.data);
+      })
+  }
   render() {
-    let board = this.state.board.map(square => {
-      return <Cell square={square} />
-    })
+
     return (
       <table>
-        <tbody>
+        <thead>
           <tr>
             <th colSpan={this.state.board[0].length}>
-              <button onClick={this.loadSample}>Sample</button>
+              <p>MineSweep!</p>
+              <p> {this.state.state}</p>
+              <select value={this.state.difficulty} onChange={this.setDifficulty}>
+                <option value="0">Easy</option>
+                <option value="1">Medium</option>
+                <option value="2">Hard</option>
+              </select>
+              <span onClick={this.newGame}>😀</span>
               <p>your are playing game # {this.state.id}</p>
+              <p>The Difficulty is #{this.state.difficulty}</p>
             </th>
           </tr>
-          {<tr>
-
-            {board}
-
-          </tr>}
+        </thead>
+        <tbody>
+          {
+            this.state.board.map((row, rowIndex) => {
+              return (
+                <tr key={rowIndex}>
+                  {row.map((value, columnIndex) => {
+                    return <Cell key={columnIndex} value={value} column={columnIndex} row={rowIndex} click={this.click} flag={this.flag} />
+                  })}
+                </tr>
+              )
+            })
+          }
         </tbody>
       </table >
     );

@@ -1,9 +1,40 @@
 import React, { Component } from "react";
 class Cell extends Component {
+  click = (event) => {
+    this.props.click(this.props.row, this.props.column)
+  }
+
+  flag = (event) => {
+    event.preventDefault()
+    this.props.flag(this.props.row, this.props.column)
+  }
+
   render() {
-    return <tr>
-      <td>{this.props.square}</td>
-    </tr>
+    let outPut = this.props.value
+    if (this.props.value === '*') {
+      outPut = '💣'
+    }
+    if (this.props.value === 'F') {
+      outPut = '⚑'
+    }
+    if (this.props.value === '@') {
+      outPut = '⛳️'
+    }
+    if (this.props.value === '_') {
+      outPut = '⥗'
+    }
+
+    // let gameState = this.props.state
+    // if (this.props.state === 'new') {
+    //   gameState = '😀'
+    // }
+
+    return (
+
+      //use this.props.value to look up what you want it to be, I.E. background image, empty flag lost, or value thats fed in.
+      <td onClick={this.click} onContextMenu={this.flag} >{outPut} </td>
+
+    )
   }
 }
 
