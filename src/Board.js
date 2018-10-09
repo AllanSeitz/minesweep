@@ -8,15 +8,14 @@ class Board extends Component {
     this.state = {
       "id": 0,
       "board": new Array(8).fill(new Array(8).fill(' ')),
-      //use this state to update win lost and playing
       "state": '',
       "mines": 10
     }
   }
-  // newGame = event => {
-  //   axios.post(`${this.BASE_URL}/games`, { difficulty: this.state.difficulty }).then(this.updateState)
-  // }
+
+
   setDifficulty = event => this.setState({ difficulty: event.target.value })
+
   newGame = event => {
     axios
       .post(`${this.game_URL}/games`,
@@ -44,11 +43,13 @@ class Board extends Component {
         this.setState(response.data);
       })
   }
+
   render() {
+    let gameEmoji = (this.state.state === 'lost') ? '🤣' : '😀'
 
     return (
       <table>
-        <thead>
+        <tbody>
           <tr>
             <th colSpan={this.state.board[0].length}>
               <p>MineSweep!</p>
@@ -58,13 +59,11 @@ class Board extends Component {
                 <option value="1">Medium</option>
                 <option value="2">Hard</option>
               </select>
-              <span onClick={this.newGame}>😀</span>
+              <span onClick={this.newGame}>{gameEmoji}</span>
               <p>your are playing game # {this.state.id}</p>
               <p>The Difficulty is #{this.state.difficulty}</p>
             </th>
           </tr>
-        </thead>
-        <tbody>
           {
             this.state.board.map((row, rowIndex) => {
               return (

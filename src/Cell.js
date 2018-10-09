@@ -24,10 +24,6 @@ class Cell extends Component {
       outPut = '⥗'
     }
 
-    // let gameState = this.props.state
-    // if (this.props.state === 'new') {
-    //   gameState = '😀'
-    // }
 
     return (
 
